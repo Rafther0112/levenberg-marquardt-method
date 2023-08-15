@@ -6,33 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import levenberg_marquardt as LM
 
-def make_noisy_test_data(p_true,Npnt,msmnt_err):
-    """
-    
-    Make noisy test data.
-
-    Parameters
-    ----------
-    p_true      : true fitted parameters values (n x 1), must be 2D array
-    Npnt        : number of data points (m = Npnt)
-    msmnt_err   : amount of noise added to model data
-
-    Returns
-    -------
-    x           : x-values of test data (m x 1), must be 2D array
-    y           : y-values of test data (m x 1), must be 2D array
-
-    """
-    
-    x = np.array(range(Npnt)).T
-    y_true = LM.lm_func(x,p_true)
-    
-    # add random measurement errors
-    rng = np.random.default_rng()
-    y = y_true + msmnt_err*rng.random((Npnt)) 
-    
-    return x,y
-
 def main(x,y,p_init):
     """
     
@@ -58,7 +31,6 @@ def main(x,y,p_init):
               iteration number.
 
     """
-    
     # close all plots
     plt.close('all')
     
@@ -72,20 +44,8 @@ def main(x,y,p_init):
     
 if __name__ == '__main__':
     
-    # flag for making noisy test data
-    make_test_data = True
-    
-    # make test data with noise
-    if make_test_data:
-        # define true fitted parameters for testing (must be 2D array)
-        p_true = np.array([[6,20,1,5]]).T
-        # define initial guess of parameters (must be 2D array)
-        p_init = np.array([[10,50,5,5.7]]).T
-        # number of data points (x-values will range from 0 to 99)
-        Npnt = 100 
-        # adding noise to input data to simulate artificial measurements
-        msmnt_err = 0.5 
-        
-        x,y = make_noisy_test_data(p_true,Npnt,msmnt_err)
-        
+    x = 0
+    y = 0
+    p_init = [1,1]   
+
     p_fit,Chi_sq,sigma_p,sigma_y,corr,R_sq,cvg_hst = main(x,y,p_init)

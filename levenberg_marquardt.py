@@ -24,9 +24,8 @@ def lm_func(t,p):
     """
 
     y_hat = p[0,0]*np.exp(t*p[1,0])
-    
-    return y_hat
 
+    return y_hat
 
 def lm_FD_J(t,p,y,dp):
     """
